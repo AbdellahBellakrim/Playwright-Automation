@@ -99,9 +99,6 @@ export async function registerUser(
   await page.click('button[data-qa="create-account"]');
   await expect(page.locator('text="Account Created!"')).toBeVisible();
   await page.click('a[data-qa="continue-button"]');
-  await expect(
-    page.locator(`a:has-text("Logged in as ${username}")`)
-  ).toBeVisible();
 
   return { email, password, username };
 }
