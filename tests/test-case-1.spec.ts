@@ -1,15 +1,22 @@
 import { test, expect } from "@playwright/test";
+import {
+  generateRandomEmail,
+  generateRandomString,
+  formatDateOfBirth,
+} from "./helpers/utils";
 
 // User Information
-const USERNAME = "leete222st4222";
-const EMAIL = `test${Date.now()}@example.com`;
-const PASSWORD = "password1337Temp";
+const USERNAME = "John Doe";
+const EMAIL = generateRandomEmail("john.doe");
+const PASSWORD = generateRandomString(10);
 
 // Personal Information
 const TITLE = "Mr";
-const DAY = "27";
-const MONTH = "January";
-const YEAR = "2018";
+// Format date of birth
+const dob = formatDateOfBirth(new Date(1990, 0, 1));
+const DAY = dob.day;
+const MONTH = dob.month;
+const YEAR = dob.year;
 
 // Address Information
 const FIRST_NAME = "John";
