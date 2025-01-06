@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { registerUser } from "./helpers/utils";
 import { generateRandomEmail, generateRandomString } from "./helpers/utils";
+import path from "path";
 
 test("Test Case 1: Register User", async ({ page }) => {
   const { username } = await registerUser(page);
@@ -79,4 +80,25 @@ test("Test Case 5: Register User with existing email", async ({ page }) => {
   await expect(
     page.locator('text="Email Address already exist!"')
   ).toBeVisible();
+});
+
+test("Test Case 6: Contact Us Form", async ({ page }) => {
+  await page.goto("http://automationexercise.com");
+  await expect(page).toHaveTitle("Automation Exercise");
+  await page.click('a:has-text("Contact Us")');
+  await expect(page.locator('text="Get In Touch"')).toBeVisible();
+  await page.fill('input[name="name"]', "John Doe");
+  await page.fill('input[name="email"]', "johndoe@example.com");
+  await page.fill('input[name="subject"]', "Test Subject");
+  await page.fill('textarea[name="message"]', "This is a test message.");
+  const filePath = path.join(__dirname, "../test_cases.pdf");
+  await page.setInputFiles('input[name="upload_file"]', filePath);
+  page.once("dialog", async (dialog) => {
+    await dialog.accept();
+  });
+  await page.click('input[value="Submit"]');
+  await page.waitForSelector(".contact-form .alert-success");
+  await expect(page.locator(".contact-form .alert-success")).toBeVisible();
+  await page.click('a:has-text("Home")');
+  await expect(page).toHaveTitle("Automation Exercise");
 });
