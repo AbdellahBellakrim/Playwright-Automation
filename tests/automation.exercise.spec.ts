@@ -109,3 +109,26 @@ test("Test Case 7: Verify Test Cases Page", async ({ page }) => {
   await page.click('a:has-text("Test Cases")');
   await expect(page.locator(".title.text-center")).toBeVisible();
 });
+
+test("Test Case 8: Verify All Products and product detail page", async ({
+  page,
+}) => {
+  await page.goto("http://automationexercise.com");
+  await expect(page).toHaveTitle("Automation Exercise");
+  await page.click('a:has-text("Products")');
+  await expect(page.locator(".title.text-center")).toBeVisible();
+
+  await expect(page.locator(".features_items")).toBeVisible();
+
+  await page.click(
+    '.features_items .product-image-wrapper >> nth=0 >> a:has-text("View Product")'
+  );
+  const productInfo = page.locator(".product-information");
+  await expect(productInfo).toBeVisible();
+  await expect(productInfo.locator("h2")).toBeVisible(); // Product name
+  await expect(productInfo.locator("p >> nth=0")).toBeVisible(); // Category
+  await expect(productInfo.locator("span >> nth=1")).toBeVisible(); // Price
+  await expect(productInfo.locator("p >> nth=1")).toBeVisible(); // Availability
+  await expect(productInfo.locator("p >> nth=2")).toBeVisible(); // Condition
+  await expect(productInfo.locator("p >> nth=3")).toBeVisible(); // Brand
+});
