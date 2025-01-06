@@ -63,3 +63,20 @@ test("Test Case 4: Logout User", async ({ page }) => {
   await page.click('text="Logout"');
   await expect(page.locator('text="Login to your account"')).toBeVisible();
 });
+
+test("Test Case 5: Register User with existing email", async ({ page }) => {
+  const { email, username } = await registerUser(page);
+
+  await page.click('text="Logout"');
+  await page.click('a:has-text("Home")');
+  await page.goto("http://automationexercise.com");
+  await expect(page).toHaveTitle("Automation Exercise");
+  await page.click('text="Signup / Login"');
+  await expect(page.locator('text="New User Signup!"')).toBeVisible();
+  await page.fill('input[name="name"]', username);
+  await page.fill('input[data-qa="signup-email"]', email);
+  await page.click('button[data-qa="signup-button"]');
+  await expect(
+    page.locator('text="Email Address already exist!"')
+  ).toBeVisible();
+});
