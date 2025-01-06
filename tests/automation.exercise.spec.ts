@@ -102,3 +102,10 @@ test("Test Case 6: Contact Us Form", async ({ page }) => {
   await page.click('a:has-text("Home")');
   await expect(page).toHaveTitle("Automation Exercise");
 });
+
+test("Test Case 7: Verify Test Cases Page", async ({ page }) => {
+  await page.goto("http://automationexercise.com");
+  await expect(page).toHaveTitle("Automation Exercise");
+  await page.click('a:has-text("Test Cases")');
+  await expect(page.locator(".title.text-center")).toBeVisible();
+});
