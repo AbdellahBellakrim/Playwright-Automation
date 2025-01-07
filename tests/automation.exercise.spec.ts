@@ -132,3 +132,27 @@ test("Test Case 8: Verify All Products and product detail page", async ({
   await expect(productInfo.locator("p >> nth=2")).toBeVisible(); // Condition
   await expect(productInfo.locator("p >> nth=3")).toBeVisible(); // Brand
 });
+
+test("Test Case 9: Search Product", async ({ page }) => {
+  await page.goto("http://automationexercise.com");
+  await expect(page).toHaveTitle("Automation Exercise");
+  await page.click('a:has-text("Products")');
+  await expect(page.locator(".title.text-center")).toBeVisible();
+  await expect(page.locator(".features_items")).toBeVisible();
+  // You can modify this search term as needed
+  const searchTerm = "Blue Top";
+  await page.fill("#search_product", searchTerm);
+  await page.click("#submit_search");
+  await expect(page.locator('h2:has-text("Searched Products")')).toBeVisible();
+  const searchResults = page.locator(".features_items .product-image-wrapper");
+  await expect(searchResults).toBeVisible();
+  const searchResultsCount = await searchResults.count();
+  await expect(searchResultsCount).toBeGreaterThan(0);
+  for (let i = 0; i < searchResultsCount; i++) {
+    const productName = await searchResults
+      .nth(i)
+      .locator(".productinfo p")
+      .textContent();
+    expect(productName?.toLowerCase()).toContain(searchTerm.toLowerCase());
+  }
+});
