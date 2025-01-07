@@ -93,12 +93,13 @@ test("Test Case 6: Contact Us Form", async ({ page }) => {
   await page.fill('textarea[name="message"]', "This is a test message.");
   const filePath = path.join(__dirname, "../test_cases.pdf");
   await page.setInputFiles('input[name="upload_file"]', filePath);
+  await page.click('input[value="Submit"]');
   page.once("dialog", async (dialog) => {
     await dialog.accept();
+    await page.waitForLoadState("networkidle");
+    await page.waitForSelector(".contact-form .alert-success");
+    await expect(page.locator(".contact-form .alert-success")).toBeVisible();
   });
-  await page.click('input[value="Submit"]');
-  await page.waitForSelector(".contact-form .alert-success");
-  await expect(page.locator(".contact-form .alert-success")).toBeVisible();
   await page.click('a:has-text("Home")');
   await expect(page).toHaveTitle("Automation Exercise");
 });

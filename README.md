@@ -15,7 +15,17 @@ npm install
 
 ## Running Tests
 
-To run the tests in non-headless mode (with visible browser):
+Tests run in non-headless mode by default, but you can also explicitly specify it:
+
+```bash
+npx playwright test --headed
+```
+
+For additional options, you can run:
+
+```bash
+npx playwright test --help
+```
 
 ```bash
 npx playwright test --headed
