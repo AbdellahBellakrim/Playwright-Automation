@@ -188,8 +188,6 @@ test("Example Test", async ({ page }) => {
 ---
 Handling flaky tests is a common challenge in automation testing, including when using Playwright. Flaky tests are tests that sometimes pass and sometimes fail without any changes to the code. Here’s how you can handle flaky tests in Playwright:
 
----
-
 ### **1. Identify the Root Cause**
 Before fixing flaky tests, you need to understand why they are flaky. Common causes include:
 - **Timing Issues:** The test runs faster or slower than expected due to network latency or UI rendering delays.
