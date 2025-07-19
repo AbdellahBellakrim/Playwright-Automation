@@ -1,4 +1,4 @@
-# QA Automation Testing
+# Playwright Automation
 
 This repository contains end-to-end tests implemented using Playwright.
 
